@@ -37,7 +37,7 @@ const MenuMobile = ({ showCategMenu, setShowCategMenu, setMobileMenu }) => {
                             {showCategMenu && (
                                 <ul className="bg-black/5 -mx-5 mt-4 -mb-4">
                                     {subMenuData.map((item) => (
-                                        <Link key={item.id} href="/" >
+                                        <Link key={item.id} href="/" onClick={() => setShowCategMenu(!showCategMenu)}>
                                             <li className="py-4 px-8 border-t flex justify-between">
                                                 {item.name}
                                                 <span className="opacity-50 text-sm">76</span>
