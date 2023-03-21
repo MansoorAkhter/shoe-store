@@ -63,7 +63,12 @@ const ProductDetails = () => {
                     </button>
                     {/* Wishlist Button End */}
 
-
+                    {/* Product Detail */}
+                    <div>
+                        <div className="text-lg font-bold mb-5">Product Details</div>
+                        <p className="mb-5 text-justify">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Error suscipit non consectetur numquam esse atque, magni, cumque perspiciatis magnam asperiores, ipsum iste. Vel ipsam recusandae voluptates eius, molestiae eaque placeat.</p>
+                        <p className="mb-5 text-justify">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Error suscipit non consectetur numquam esse atque, magni, cumque perspiciatis magnam asperiores, ipsum iste. Vel ipsam recusandae voluptates eius, molestiae eaque placeat.</p>
+                    </div>
                 </div>
             </div>
         </Wrapper>
