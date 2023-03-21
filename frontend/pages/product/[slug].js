@@ -2,6 +2,7 @@ import React from "react";
 import ProductDetailCarousel from "@/components/ProductDetailCarousel";
 import Wrapper from "@/components/Wrapper";
 import { IoMdHeartEmpty } from "react-icons/io";
+import RelatedProducts from "@/components/RelatedProducts";
 
 const ProductDetails = () => {
     return <div className="w-full md:py-20">
@@ -70,7 +71,9 @@ const ProductDetails = () => {
                         <p className="mb-5 text-justify">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Error suscipit non consectetur numquam esse atque, magni, cumque perspiciatis magnam asperiores, ipsum iste. Vel ipsam recusandae voluptates eius, molestiae eaque placeat.</p>
                     </div>
                 </div>
+                {/* RIGHT END */}
             </div>
+            <RelatedProducts />
         </Wrapper>
     </div>;
 };
