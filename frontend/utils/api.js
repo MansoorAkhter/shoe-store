@@ -4,11 +4,10 @@ export const fetchData = async (endpoint) => {
 
     var requestOptions = {
         method: 'GET',
-        headers: { Authorization: Bearer + STRAPI_API_TOKEN },
-        redirect: 'follow'
+        headers: { Authorization: "Bearer " + STRAPI_API_TOKEN },
     };
 
-    const response = await fetch(`${API_URL} ${endpoint}`, requestOptions);
+    const response = await fetch(`${API_URL}${endpoint}`, requestOptions);
     const data = await response.json();
 
     return data;

@@ -1,8 +1,11 @@
 import HeroBanner from "@/components/HeroBanner";
 import ProductCard from "@/components/ProductCard";
 import Wrapper from "@/components/Wrapper";
+import { useState } from "react";
 
 export default function Home() {
+  const [data, setData] = useState(null);
+
   return (
     <main>
       <HeroBanner />
