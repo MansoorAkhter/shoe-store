@@ -1,8 +1,11 @@
+import React from "react";
 import { getDiscountedPricePercentage } from "@/utils/helper";
 import Image from "next/image";
 import Link from "next/link";
 
+
 const ProductCard = ({ data: { attributes: p, id } }) => {
+
     return (
         <Link href={`/products/${p.slug}`}
             className="transform overflow-hidden bg-white duration-200 hover:scale-105 cursor-pointer"
@@ -31,6 +34,8 @@ const ProductCard = ({ data: { attributes: p, id } }) => {
                 </div>
             </div>
         </Link>
+
+
     );
 };
 

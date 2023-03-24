@@ -1,9 +1,8 @@
-import { useRouter } from "next/router";
-import React from "react";
 import Wrapper from "@/components/Wrapper";
 import ProductCard from "@/components/ProductCard";
+import { fetchData } from "@/utils/api";
 
-const Category = () => {
+const Category = ({ category, products, slug }) => {
 
     return (
         <div className="w-full md:py-20">
@@ -16,12 +15,12 @@ const Category = () => {
 
                 {/* Product Grid Start */}
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 my-14 px-5 md:px-0">
+                    {/* <ProductCard />
                     <ProductCard />
                     <ProductCard />
                     <ProductCard />
                     <ProductCard />
-                    <ProductCard />
-                    <ProductCard />
+                    <ProductCard /> */}
                 </div>
                 {/* Product Grid End */}
             </Wrapper>
@@ -29,3 +28,28 @@ const Category = () => {
 };
 
 export default Category;
+
+
+export async function getStaticPaths() {
+    const category = await fetchData("/api/categories?populate=*");
+    const paths = category?.data.map((item) => ({
+        params: {
+            slug: item.attributes.slug
+        }
+    }))
+
+    return {
+        paths,
+        fallback: false
+    }
+}
+
+// `getStaticPaths` requires using `getStaticProps`
+export async function getStaticProps({ params: slug }) {
+    const category = await fetchData(`/api/categories?filters[slug][$eq]=${slug}`);
+    const products = await fetchData(`/api/products?populate=*&[filters][categories][slug][$eq]=${slug}`);
+
+    return {
+        props: { category, products, slug }
+    }
+}
