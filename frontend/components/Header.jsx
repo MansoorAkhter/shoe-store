@@ -8,13 +8,16 @@ import { BiMenuAltRight } from "react-icons/bi";
 import { VscChromeClose } from "react-icons/vsc";
 import MenuMobile from "./MenuMobile";
 import Menu from "./Menu";
+import { fetchData } from "@/utils/api";
 
 const Header = () => {
     const [mobileMenu, setMobileMenu] = useState(false);
     const [showCategMenu, setShowCategMenu] = useState(false);
     const [show, setShow] = useState("translate-y-0");
     const [lastScrollY, setLastScrollY] = useState(0);
+    const [categories, setCategories] = useState(null)
 
+    // NavBar hide & show on scroll
     const controlNavBar = () => {
         if (window.scrollY > 200) {
             if (window.scrollY > lastScrollY && !mobileMenu) {
@@ -34,6 +37,19 @@ const Header = () => {
         window.addEventListener("scroll", controlNavBar);
         return () => { window.removeEventListener("scroll", controlNavBar) }
     }, [lastScrollY])
+    // NavBar hide & show on scroll
+
+
+
+    useEffect(() => {
+        fetchCartegories();
+    }, [])
+
+    const fetchCartegories = async () => {
+        // To populate one-level deep for all relations, use the * wildcard in combination with the populate parameter:
+        const { data } = await fetchData("/api/categories?populate=*");
+        setCategories(data);
+    }
 
     return (
         <header className={`w-full h-[50px] bg-white flex items-center justify-between z-20 sticky top-0 transition-transform duration-300 ${show}`}>
@@ -45,12 +61,13 @@ const Header = () => {
                 <Menu
                     showCategMenu={showCategMenu}
                     setShowCategMenu={setShowCategMenu}
-
+                    categories={categories}
                 />
                 {mobileMenu && (<MenuMobile
                     showCategMenu={showCategMenu}
                     setShowCategMenu={setShowCategMenu}
                     setMobileMenu={setMobileMenu}
+                    categories={categories}
                 />)}
 
                 <div className="flex items-center gap-2 text-black">
