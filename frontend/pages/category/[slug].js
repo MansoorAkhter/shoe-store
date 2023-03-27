@@ -9,18 +9,15 @@ const Category = ({ category, products, slug }) => {
             <Wrapper>
                 <div className="text-center max-w-[800px] mx-auto mt-8 md:mt-0">
                     <h1 className="leading-tight text-[28px] md:text-[34px] mb-5 font-semibold">
-                        Running Shoes
+                        {category?.data?.[0]?.attributes?.name}
                     </h1>
                 </div>
 
                 {/* Product Grid Start */}
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 my-14 px-5 md:px-0">
-                    {/* <ProductCard />
-                    <ProductCard />
-                    <ProductCard />
-                    <ProductCard />
-                    <ProductCard />
-                    <ProductCard /> */}
+                    {products?.data?.map((product) => (
+                        <ProductCard key={product?.id} data={product} />
+                    ))}
                 </div>
                 {/* Product Grid End */}
             </Wrapper>
