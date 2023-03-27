@@ -1,12 +1,26 @@
-import React from "react";
+import React, { useState } from "react";
 import ProductDetailCarousel from "@/components/ProductDetailCarousel";
 import Wrapper from "@/components/Wrapper";
 import { IoMdHeartEmpty } from "react-icons/io";
 import RelatedProducts from "@/components/RelatedProducts";
 import { fetchData } from "@/utils/api";
 import { getDiscountedPricePercentage } from "@/utils/helper";
+import ReactMarkdown from "react-markdown";
 
 const ProductDetails = ({ product, relatedProducts }) => {
+    const [selectedSize, setSelectedSize] = useState();
+    const [showError, setShowError] = useState(false);
+
+    const addToCartHandler = () => {
+        console.log("first");
+        if (!selectedSize) {
+            setShowError(true);
+            document.getElementById("sizeGrid").scrollIntoView({
+                block: "center",
+                behavior: "smooth"
+            })
+        }
+    }
 
     const p = product?.data?.[0]?.attributes;
 
@@ -44,7 +58,7 @@ const ProductDetails = ({ product, relatedProducts }) => {
                     </div>
 
                     {/* Size Range Start*/}
-                    <div className="mb-10">
+                    <div id="sizeGrid" className="mb-10">
                         {/* Heading */}
                         <div className="flex justify-between mb-2">
                             <div className="text-md font-semibold">Select Size</div>
@@ -55,18 +69,24 @@ const ProductDetails = ({ product, relatedProducts }) => {
                         <div className="grid grid-cols-3 gap-2">
                             {p?.size?.data?.map((item, index) => (
                                 <div key={index}
-                                    className={`border rounded-md text-center py-3 font-medium ${item.enabled ? "hover:border-black cursor-pointer" : "cursor-not-allowed bg-black/[0.1] opacity-50"}`}>{item.size}</div>
+                                    onClick={() => {
+                                        setSelectedSize(item.size)
+                                        setShowError(false)
+                                    }}
+                                    className={`border rounded-md text-center py-3 font-medium ${item.enabled ? "hover:border-black cursor-pointer" : "cursor-not-allowed bg-black/[0.1] opacity-50"} ${selectedSize === item.size ? "border-black" : ""}`}>
+                                    {item.size}</div>
                             ))}
                         </div>
                         {/* Size End */}
 
                         {/* Show Error Start */}
-                        <div className="text-red-600 font-semibold mt-1">Size selection is required</div>
+                        {showError && <div className="text-red-600 font-semibold mt-1">Size selection is required</div>}
                     </div>
                     {/* Size Range End */}
 
                     {/* Add to Cart Button Start */}
                     <button
+                        onClick={addToCartHandler}
                         className="w-full py-4 rounded-full bg-black text-white text-lg font-medium transition-transform active:scale-95 mb-3 hover:opacity-75">
                         Add to Cart
                     </button>
@@ -82,8 +102,11 @@ const ProductDetails = ({ product, relatedProducts }) => {
                     {/* Product Detail */}
                     <div>
                         <div className="text-lg font-bold mb-5">Product Details</div>
-                        <p className="mb-5 text-justify">{p.description}</p>
-                        <p className="mb-5 text-justify">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Error suscipit non consectetur numquam esse atque, magni, cumque perspiciatis magnam asperiores, ipsum iste. Vel ipsam recusandae voluptates eius, molestiae eaque placeat.</p>
+                        <p className="markdown mb-5">
+                            <ReactMarkdown>
+                                {p.description}
+                            </ReactMarkdown>
+                        </p>
                     </div>
                 </div>
                 {/* RIGHT END */}
