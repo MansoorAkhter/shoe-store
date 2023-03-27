@@ -13,7 +13,7 @@ const Category = ({ category, products, slug }) => {
     const [pageIndex, setPageIndex] = useState(1);
 
     // Data fetching for pagination by SWR
-    const { data, error, isLoading } = useSWR(`/api/products?populate=*&[filters][categories][slug][$eq]=${slug}&pagination[page]=${pageIndex}&pagination[pageSize]=${maxResult}`, fetchData, { fallback: products })
+    const { data, error, isLoading } = useSWR(`/api/products?populate=*&[filters][categories][slug][$eq]=${slug}&pagination[page]=${pageIndex}&pagination[pageSize]=${maxResult}`, fetchData, { fallbackData: products })
 
     // Get Current URL
     const { query } = useRouter();
