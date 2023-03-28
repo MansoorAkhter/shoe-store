@@ -9,9 +9,11 @@ export const cartSlice = createSlice({
         addToCart: (state, action) => {
             const item = state.cartItems.find((p) => p.id === action.payload.id);
             if (item) {
+                // if product is already exist in cart then increase quantity
                 item.quantity++;
+                item.attributes.price = item.oneQuantityPrice * item.quantity;
             } else {
-                // if product is not exist in cart 
+                // if product is not exist in cart then add to cart
                 state.cartItems.push({ ...action.payload, quantity: 1 })
             }
         },

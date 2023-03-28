@@ -1,51 +1,69 @@
 import Image from "next/image";
 import { RiDeleteBin6Line } from "react-icons/ri";
 
-const CartItem = () => {
+const CartItem = ({ data }) => {
+    const p = data.attributes;
+
     return (
         <div className="flex py-5 gap-3 md:gap-5 border-b ">
+            {/* PRODUCT IMAGE */}
             <div className="shrink-0 aspect-square w-[50px] md:w-[120px]">
-                <Image src="/product-1.webp" alt="shoe" width={120} height={120} className="rounded-lg" />
+                <Image src={p.thumbnail.data.attributes.url}
+                    alt={p.name}
+                    width={120}
+                    height={120}
+                    className="rounded-lg" />
             </div>
 
             <div className="w-full flex flex-col">
                 <div className="flex flex-col md:flex-row justify-between">
                     {/* Product Title */}
-                    <div className="text-lg md:text-2xl font-semibold text-black/80">Jordan Retro 6 G</div>
+                    <div className="text-lg md:text-2xl font-semibold text-black/80">{p.name}</div>
 
                     {/* Subtitle */}
-                    <div className="text-sm md:text-lg font-medium text-black/50 block md:hidden">Men&apos;s Golf Shoes</div>
+                    <div className="text-sm md:text-lg font-medium text-black/50 block md:hidden">{p.subtitle}</div>
 
                     {/* PRODUCT PRICE */}
                     <div className="text-sm md:text-lg font-bold text-black/50 mt-2">
-                        $: 20.00
+                        ${p.price}
                     </div>
                 </div>
 
                 {/* Subtitle */}
-                <div className="text-lg font-medium text-black/50 hidden md:block">Men&apos;s Golf Shoes</div>
+                <div className="text-lg font-medium text-black/50 hidden md:block">{p.subtitle}</div>
 
                 <div className="flex items-center justify-between mt-4">
                     <div className="flex items-center gap-2 md:gap-10 text-black/50 text-sm md:text-lg">
                         <div className="flex items-center gap-1">
                             <div className="font-semibold">Size:</div>
                             <select className="hover:text-black">
-                                <option value="1">UK 6</option>
-                                <option value="2">UK 6.5</option>
-                                <option value="3">UK 7</option>
-                                <option value="4">UK 8</option>
-                                <option value="5">UK 9</option>
+                                {p.size.data.map((item, index) => (
+                                    <option
+                                        key={index}
+                                        value={item.size}
+                                        selected={data.selectedSize === item.size}
+                                        disabled={!item.enabled ? true : false}
+                                    >
+                                        {item.size}
+                                    </option>
+                                ))}
                             </select>
                         </div>
 
                         <div className="flex items-center gap-1">
                             <div className="font-semibold">Quantity:</div>
                             <select className="hover:text-black">
-                                <option value="1">1</option>
-                                <option value="2">2</option>
-                                <option value="3">3</option>
-                                <option value="4">4</option>
-                                <option value="5">5</option>
+                                {Array.from({ length: 10 }, (_, index) => index + 1).map((q, i) => {
+                                    return (
+                                        <option
+                                            key={i}
+                                            value={q}
+                                            selected={data.quantity === q}
+                                        >
+                                            {q}
+                                        </option>
+                                    )
+                                })}
                             </select>
                         </div>
                     </div>
