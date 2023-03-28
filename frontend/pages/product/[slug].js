@@ -111,7 +111,7 @@ const ProductDetails = ({ product, relatedProducts }) => {
                 </div>
                 {/* RIGHT END */}
             </div>
-            {/* <RelatedProducts /> */}
+            <RelatedProducts relatedProducts={relatedProducts} />
         </Wrapper >
     </div >;
 };
