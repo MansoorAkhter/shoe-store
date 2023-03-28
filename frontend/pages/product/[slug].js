@@ -6,25 +6,50 @@ import RelatedProducts from "@/components/RelatedProducts";
 import { fetchData } from "@/utils/api";
 import { getDiscountedPricePercentage } from "@/utils/helper";
 import ReactMarkdown from "react-markdown";
+import { useDispatch, useSelector } from "react-redux";
+import { addToCart } from "@/store/cartSlice";
+
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const ProductDetails = ({ product, relatedProducts }) => {
+    const dispatch = useDispatch();
     const [selectedSize, setSelectedSize] = useState();
     const [showError, setShowError] = useState(false);
 
+    const p = product?.data?.[0]?.attributes;
+
+    const notify = () => {
+        toast.success('Success. Check your cart!', {
+            position: "bottom-right",
+            autoClose: 5000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            theme: "dark",
+        });
+    }
+
     const addToCartHandler = () => {
-        console.log("first");
         if (!selectedSize) {
             setShowError(true);
             document.getElementById("sizeGrid").scrollIntoView({
                 block: "center",
                 behavior: "smooth"
             })
+        } else {
+            dispatch(addToCart({ ...product?.data?.[0], selectedSize, oneQuantityPrice: p.price }));
+            notify()
         }
+
     }
 
-    const p = product?.data?.[0]?.attributes;
+
 
     return <div className="w-full md:py-20">
+        <ToastContainer />
         <Wrapper>
             <div className="flex flex-col lg:flex-row md:px-10 gap-[50px] lg:gap-[100px]">
                 {/* LEFT */}
@@ -32,7 +57,7 @@ const ProductDetails = ({ product, relatedProducts }) => {
                     <ProductDetailCarousel images={p?.image?.data} />
                 </div>
 
-                {/* RIGHT */}
+                {/* RIGHT Start*/}
                 <div className="flex-[1] py-3">
                     {/* Product Title */}
                     <h1 className="text-[34px] font-semibold mb-2 leading-10 md:leading-none">{p.name}</h1>
