@@ -1,6 +1,6 @@
 import Image from "next/image";
 import { RiDeleteBin6Line } from "react-icons/ri";
-import { updateCart } from "@/store/cartSlice";
+import { updateCart, removefromCart } from "@/store/cartSlice";
 import { useDispatch } from "react-redux";
 
 const CartItem = ({ data }) => {
@@ -81,7 +81,9 @@ const CartItem = ({ data }) => {
                         </div>
                     </div>
 
-                    <RiDeleteBin6Line className="cursor-pointer text-black/50 hover:text-black text-[16px] md:text-[20px]" />
+                    <RiDeleteBin6Line
+                        onClick={() => dispatch(removefromCart({ id: data.id }))}
+                        className="cursor-pointer text-black/50 hover:text-black text-[16px] md:text-[20px]" />
                 </div>
 
             </div>
