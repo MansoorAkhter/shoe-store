@@ -3,10 +3,15 @@ import Link from "next/link";
 import CartItem from "@/components/CartItem";
 import Wrapper from "@/components/Wrapper";
 import { useSelector } from "react-redux";
+import { useMemo } from "react";
 
 const Cart = () => {
+    const { cartItems } = useSelector(state => state.cart);
 
-    const { cartItems } = useSelector(state => state.cart)
+    const subTotal = useMemo(() => {
+        return cartItems.reduce((total, val) => total + val.attributes.price, 0)
+    }, [cartItems]);
+
 
     return (
         <div className="w-full md:py-20">
@@ -35,10 +40,15 @@ const Cart = () => {
                             <div className="p-5 my-5 bg-black/5 rounded-xl">
                                 <div className="flex justify-between">
                                     <div className="uppercase text-sm md:text-lg font-medium text-black">Subtotal</div>
-                                    <div className="text-sm md:text-lg font-medium text-black">$: 60.00</div>
+                                    <div className="text-sm md:text-lg font-medium text-black">$: {subTotal}</div>
                                 </div>
 
-                                <div className="text-sm md:text-lg py-5 border-t mt-5">Lorem ipsum, dolor sit amet consectetur adipisicing elit. Accusamus, deleniti doloremque ullam tempora saepe labore porro sequi, amet, iure aliquid reprehenderit. Architecto labore voluptatibus esse eius aspernatur quidem repudiandae at!
+                                <div className="text-sm md:text-lg py-5 border-t mt-5">
+                                    The subtotal reflects the total price of
+                                    your order, including duties and taxes,
+                                    before any applicable discounts. It does
+                                    not include delivery costs and
+                                    international transaction fees.
                                 </div>
                             </div>
 
