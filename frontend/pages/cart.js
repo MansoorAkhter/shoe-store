@@ -53,7 +53,11 @@ const Cart = () => {
 
                 {/* Empty Cart Screen */}
                 {cartItems.length < 1 && (<div className="flex-[2] flex flex-col items-center pb-[50px] md:-mt-14">
-                    <Image src="/empty-cart.jpg" width={300} height={300} className="w-[300px] md:w-[400px]" />
+                    <Image
+                        src="/empty-cart.jpg"
+                        alt="Empty Cart"
+                        width={300} height={300}
+                        className="w-[300px] md:w-[400px]" />
                     <span className="text-xl font-bold">Your cart is empty</span>
                     <span className="text-center mt-4">
                         Looks like you have not added anything in your cart.

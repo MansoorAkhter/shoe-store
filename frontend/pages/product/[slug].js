@@ -8,9 +8,9 @@ import { getDiscountedPricePercentage } from "@/utils/helper";
 import ReactMarkdown from "react-markdown";
 import { useDispatch, useSelector } from "react-redux";
 import { addToCart } from "@/store/cartSlice";
-
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+
 
 const ProductDetails = ({ product, relatedProducts }) => {
     const dispatch = useDispatch();
@@ -45,8 +45,6 @@ const ProductDetails = ({ product, relatedProducts }) => {
         }
 
     }
-
-
 
     return <div className="w-full md:py-20">
         <ToastContainer />
