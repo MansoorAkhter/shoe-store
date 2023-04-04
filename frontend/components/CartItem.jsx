@@ -3,6 +3,7 @@ import { RiDeleteBin6Line } from "react-icons/ri";
 import { updateCart, removefromCart } from "@/store/cartSlice";
 import { useDispatch } from "react-redux";
 
+
 const CartItem = ({ data }) => {
     const p = data.attributes;
     const dispatch = useDispatch();
