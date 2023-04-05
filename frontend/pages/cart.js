@@ -4,14 +4,15 @@ import CartItem from "@/components/CartItem";
 import Wrapper from "@/components/Wrapper";
 import { useSelector } from "react-redux";
 import { useMemo, useState } from "react";
+// Stripe Payment
 import { loadStripe } from "@stripe/stripe-js";
 import { makePaymentRequest } from "@/utils/api";
-
 const stripePromise = loadStripe(process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY);
 
 const Cart = () => {
-    const { cartItems } = useSelector(state => state.cart);
     const [loading, setLoading] = useState(false);
+    const { cartItems } = useSelector(state => state.cart);
+
 
 
     const subTotal = useMemo(() => {
@@ -19,16 +20,17 @@ const Cart = () => {
     }, [cartItems]);
 
 
+
     const handlePayment = async () => {
         try {
             setLoading(true);
             const stripe = await stripePromise;
-            const res = await makePaymentRequest("/api/orders", { products: cartItems });
-            await stripe.redirectToCheckout({ sessionId: res.stripeSession.id });
+            const res = await makePaymentRequest("/api/orders", { products: cartItems, });
+            await stripe.redirectToCheckout({ sessionId: res.stripeSession.id, });
 
         } catch (error) {
             setLoading(false);
-            console.log(error);
+            console.log("STRIPE ERR------->", error);
         }
     }
 
